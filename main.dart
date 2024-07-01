@@ -1,54 +1,59 @@
 import 'package:flutter/material.dart';
-//Everything in Flutter is a Widget
 
-//there three types of Widgets
-/*
-1- Visible Widget like Text,RaisedButton
-2- Invisible Widget such as Row,Column
-3-Container
-*/
-
+//Flutter has the ability to update each pixel inside the app
+//So we have to identify which pixel to update
 void main() {
-  //this function takes a Widget parameter
   runApp(MyApp());
 }
 
-//the most important part in MyApp is the Homepage
-class MyApp extends StatelessWidget {
-  //inside StatelessWidget Abstract Function so we have to implement the codes inside it
+//StatelessWidget doesn't update the information inside the app
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _MyAppState();
+  }
+}
+
+//this class inherits the state from StatefullWidget
+// =>   _underscore  means that the class is private
+class _MyAppState extends State<MyApp> {
+  int _counter = 0;
+
+  void _increamentCounter() {
+    setState(() {
+      _counter += 2;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      //in MaterialApp we have many functions and attributes
       home: Scaffold(
-        //Scaffold responsible of the structure of the Application
         appBar: AppBar(
-          title: Text("App Bar"),
-          backgroundColor: Colors.black,
+          title: Text("AppBar"),
+          backgroundColor: Colors.cyan,
           foregroundColor: Colors.white,
         ),
-        // body: Text("First App"),
-
-        /* body: Column(
-         mainAxisAlignment: MainAxisAlignment.center,
-         children: [
-           //many texts
-           Text("App Bar1"),
-           Text("App Bar2"),
-           Text("App Bar3"),
-         ],
-       ),
-       */
         body: Container(
           alignment: Alignment.center,
-          color: Colors.cyan,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Flutter"),
-              Text("App Dart"),
+              Text("Flutter App",
+              style: Theme.of(context).textTheme.displayMedium
+              ),
+
+              Text(
+                "$_counter",
+                style: Theme.of(context).textTheme.headlineMedium,
+              )
             ],
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _increamentCounter,
+          backgroundColor: Colors.cyan,
+          child: Icon(Icons.add),
         ),
       ),
     );
